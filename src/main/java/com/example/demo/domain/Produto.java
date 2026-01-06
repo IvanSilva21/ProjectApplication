@@ -2,21 +2,29 @@ package com.example.demo.domain;
 
 import lombok.Data;
 
-//
-@Data
 public class Produto {
 
-    //Atributos
     private String nome;
-    private double preco;
+    private Double preco;
 
-    //Contrutor Vazio
-    public Produto(){
-
+    // Construtor vazio (OBRIGATÓRIO)
+    public Produto() {
     }
-    //Contrutor normal
-    public Produto(String nome, Double preco){
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public Double getPreco() {
+        return preco;
+    }
+
+    public void setPreco(Double preco) {
         this.preco = preco;
     }
 }
+
