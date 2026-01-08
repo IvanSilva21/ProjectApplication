@@ -1,14 +1,34 @@
 package com.example.demo.domain;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.Data;
+import lombok.Generated;
 
+
+@Entity
 public class Produto {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    private Long id;
     private String nome;
     private Double preco;
 
     // Construtor vazio (OBRIGATÓRIO)
     public Produto() {
+    }
+
+    public Produto(String nome, Double preco) {
+        this.nome = nome;
+        this.preco = preco;
+    }
+
+    public Long getId(){
+        return id;
     }
 
     public String getNome() {
@@ -27,4 +47,3 @@ public class Produto {
         this.preco = preco;
     }
 }
-
