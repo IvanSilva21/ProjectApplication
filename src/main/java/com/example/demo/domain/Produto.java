@@ -7,6 +7,8 @@ import jakarta.persistence.Id;
 import lombok.Data;
 import lombok.Generated;
 
+import java.math.BigDecimal;
+
 
 @Entity
 public class Produto {
@@ -16,13 +18,13 @@ public class Produto {
 
     private Long id;
     private String nome;
-    private Double preco;
+    private BigDecimal preco;
 
-    // Construtor vazio (OBRIGATÓRIO)
+
     public Produto() {
     }
 
-    public Produto(String nome, Double preco) {
+    public Produto(String nome, BigDecimal preco) {
         this.nome = nome;
         this.preco = preco;
     }
@@ -35,15 +37,16 @@ public class Produto {
         return nome;
     }
 
-    public void setNome(String nome) {
+    public void setNome(String nome){
         this.nome = nome;
     }
 
-    public Double getPreco() {
+    public BigDecimal getPreco() {
         return preco;
     }
 
-    public void setPreco(Double preco) {
+    public void setPreco(BigDecimal preco) {
+
         this.preco = preco;
     }
 }

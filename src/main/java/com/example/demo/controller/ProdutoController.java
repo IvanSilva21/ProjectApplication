@@ -1,11 +1,15 @@
 package com.example.demo.controller;
 
 import com.example.demo.domain.Produto;
+import com.example.demo.dto.update.ProdutoUpdateDTO;
 import com.example.demo.service.ProdutoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import com.example.demo.dto.request.ProdutoRequestDTO;
+import com.example.demo.dto.response.ProdutoResponseDTO;
+import jakarta.validation.Valid;
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/produtos")
@@ -18,15 +22,17 @@ public class ProdutoController {
     }
 
     @PostMapping
-    public ResponseEntity<Produto> adicionar(@RequestBody Produto produto) {
-        Produto salvo = service.salvar(produto);
-        return ResponseEntity.ok(salvo);
+    public ResponseEntity<ProdutoResponseDTO> adicionar(
+            @RequestBody @Valid ProdutoRequestDTO dto
+    ) {
+        return ResponseEntity.ok(service.salvar(dto));
     }
 
     @GetMapping
-    public ResponseEntity<List<Produto>> listar() {
+    public ResponseEntity<List<ProdutoResponseDTO>> listar() {
         return ResponseEntity.ok(service.listar());
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<Produto> buscarPorId(@PathVariable Long id) {
@@ -35,13 +41,18 @@ public class ProdutoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Produto> atualizar(
+    public ResponseEntity<ProdutoResponseDTO> atualizar(
             @PathVariable Long id,
-            @RequestBody Produto produto
+            @RequestBody @Valid ProdutoUpdateDTO dto
     ) {
-        Produto atualizado = service.atualizar(id, produto);
-        return ResponseEntity.ok(atualizado);
+        Produto atualizado = service.atualizar(id, dto);
+        return ResponseEntity.ok(new ProdutoResponseDTO(
+                atualizado.getId(),
+                atualizado.getNome(),
+                atualizado.getPreco()
+        ));
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
