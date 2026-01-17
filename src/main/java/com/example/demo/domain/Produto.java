@@ -1,9 +1,6 @@
 package com.example.demo.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Generated;
 
@@ -11,6 +8,7 @@ import java.math.BigDecimal;
 
 
 @Entity
+@Table(name = "produtos")
 public class Produto {
 
     @Id
@@ -19,6 +17,10 @@ public class Produto {
     private Long id;
     private String nome;
     private BigDecimal preco;
+
+    @ManyToOne
+    @JoinColumn(name = "categoria_id", nullable = false)
+    private Categoria categoria;
 
 
     public Produto() {
@@ -29,7 +31,7 @@ public class Produto {
         this.preco = preco;
     }
 
-    public Long getId(){
+    public Long getId() {
         return id;
     }
 
@@ -48,5 +50,13 @@ public class Produto {
     public void setPreco(BigDecimal preco) {
 
         this.preco = preco;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
     }
 }

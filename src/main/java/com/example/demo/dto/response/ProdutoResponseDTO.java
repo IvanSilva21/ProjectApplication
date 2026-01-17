@@ -1,5 +1,7 @@
 package com.example.demo.dto.response;
 
+import com.example.demo.domain.Categoria;
+
 import java.math.BigDecimal;
 
 public class ProdutoResponseDTO {
@@ -8,10 +10,12 @@ public class ProdutoResponseDTO {
     private String nome;
     private BigDecimal preco;
 
+
     public ProdutoResponseDTO(Long id, String nome, BigDecimal preco) {
         this.id = id;
         this.nome = nome;
         this.preco = preco;
+
     }
 
     public Long getId() {

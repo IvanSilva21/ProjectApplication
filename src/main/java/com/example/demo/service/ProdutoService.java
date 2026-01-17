@@ -1,8 +1,10 @@
 package com.example.demo.service;
 
+import com.example.demo.domain.Categoria;
 import com.example.demo.dto.update.ProdutoUpdateDTO;
 import com.example.demo.exception.ProdutoNotFoundException;
 import com.example.demo.domain.Produto;
+import com.example.demo.repository.CategoriaRepository;
 import com.example.demo.repository.ProdutoRepository;
 import org.springframework.stereotype.Service;
 import com.example.demo.dto.response.ProdutoResponseDTO;
@@ -13,21 +15,42 @@ import java.util.List;
 public class ProdutoService {
 
     private final ProdutoRepository repository;
+    private final CategoriaRepository categoriaRepository;
 
 
-    public ProdutoService(ProdutoRepository repository) {
+    public ProdutoService(ProdutoRepository repository, CategoriaRepository categoriaRepository) {
+
         this.repository = repository;
+        this.categoriaRepository = categoriaRepository;
     }
 
+
     public ProdutoResponseDTO salvar(ProdutoRequestDTO dto) {
-        Produto produto = new Produto(dto.getNome(), dto.getPreco());
+
+        Categoria categoria = categoriaRepository.findById(dto.getCategoriaId())
+                .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
+
+        Produto produto = new Produto();
+        produto.setNome(dto.getNome());
+        produto.setPreco(dto.getPreco());
+        produto.setCategoria(categoria);
+
         Produto salvo = repository.save(produto);
+
         return new ProdutoResponseDTO(
                 salvo.getId(),
                 salvo.getNome(),
                 salvo.getPreco()
         );
     }
+
+    public class CategoriaNotFoundException extends RuntimeException {
+        public CategoriaNotFoundException(Long id) {
+            super("Categoria não encontrada com id: " + id);
+        }
+    }
+
+
 
     public List<ProdutoResponseDTO> listar() {
         return repository.findAll()

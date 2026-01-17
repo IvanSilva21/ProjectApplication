@@ -12,6 +12,7 @@ import java.util.List;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+
 @Tag(name = "Produtos", description = "Gerenciamento de produtos")
 @RestController
 @RequestMapping("/produtos")
@@ -23,6 +24,8 @@ public class ProdutoController {
         this.service = service;
     }
 
+
+
     @Operation(summary = "Cadastrar um novo produto")
     @PostMapping
     public ResponseEntity<ProdutoResponseDTO> adicionar(
@@ -31,11 +34,13 @@ public class ProdutoController {
         return ResponseEntity.ok(service.salvar(dto));
     }
 
+
     @Operation(summary = "Listar todos os produtos")
     @GetMapping
     public ResponseEntity<List<ProdutoResponseDTO>> listar() {
         return ResponseEntity.ok(service.listar());
     }
+
 
     @Operation(
             summary = "Buscar produto por ID",
@@ -59,7 +64,6 @@ public class ProdutoController {
                 atualizado.getPreco()
         ));
     }
-
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {

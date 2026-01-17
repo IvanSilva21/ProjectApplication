@@ -1,11 +1,8 @@
 package com.example.demo.dto.request;
 
-
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-
+import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
+
 
 public class ProdutoRequestDTO {
 
@@ -16,6 +13,9 @@ public class ProdutoRequestDTO {
     @Positive(message = "Preço deve ser maior que zero")
     private BigDecimal preco;
 
+    @NotNull(message = "Categoria é obrigatória")
+    private Long categoriaId;
+
     public String getNome() {
         return nome;
     }
@@ -23,6 +23,11 @@ public class ProdutoRequestDTO {
     public BigDecimal getPreco() {
         return preco;
     }
+
+    public Long getCategoriaId() {
+        return categoriaId;
+    }
+
 }
 
 
